@@ -23,12 +23,14 @@ type
     TempUniQuery: TUniQuery;
     AEPropStorageEh: TPropStorageEh;
     EnterAction: TAction;
+    EscapeAction: TAction;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure CancelActionExecute(Sender: TObject);
     procedure ApplyActionExecute(Sender: TObject);
     procedure EnterActionExecute(Sender: TObject);
+    procedure EscapeActionExecute(Sender: TObject);
   private
     { Private declarations }
     DataSaved: Boolean;
@@ -262,6 +264,24 @@ end;
 function TAddEditForm.ErrorCheck: Boolean;
 begin
   Result := True;
+end;
+
+procedure TAddEditForm.EscapeActionExecute(Sender: TObject);
+var
+  AC: TComponent;
+begin
+  AC := ControlActiveCorrect(ActiveControl);
+
+  if (AC is TcxDBLookupComboBox) and TcxDBLookupComboBox(AC).DroppedDown then
+  begin
+    TcxDBLookupComboBox(AC).DroppedDown := False;
+  end
+  else if (AC is TcxLookupComboBox) and TcxLookupComboBox(AC).DroppedDown then
+  begin
+    TcxLookupComboBox(AC).DroppedDown := False;
+  end
+  else
+    ModalResult:= mrCancel;
 end;
 
 procedure TAddEditForm.FormClose(Sender: TObject; var Action: TCloseAction);

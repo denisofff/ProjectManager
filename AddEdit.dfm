@@ -70,6 +70,11 @@ object AddEditForm: TAddEditForm
       ShortCut = 13
       OnExecute = EnterActionExecute
     end
+    object EscapeAction: TAction
+      Caption = 'EscapeAction'
+      ShortCut = 27
+      OnExecute = EscapeActionExecute
+    end
   end
   object AEUniQuery: TUniQuery
     Connection = MainForm.MainUniConnection
